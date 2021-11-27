@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Head, NotFoundException, Param, Post, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -18,4 +18,18 @@ export class ProductsController {
    }
 
 
+   // handle request body payload
+   // handle request query paramters payload
+   @Post()
+   addProduct(@Body() body,
+      @Body('id') id,
+      @Query() query,
+      @Query('product_id') product_id
+   ): any {
+      console.log(query, product_id)
+      if (id != '1') {
+         throw new NotFoundException()
+      }
+      return { ...body, msg: 'this is ur added data' }
+   }
 }
